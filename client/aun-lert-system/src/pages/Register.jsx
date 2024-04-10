@@ -25,13 +25,15 @@ const Register = () => {
     const errs = Validation(values)
     setErrors(errs)
     if(errors.name === "" && errors.email === "" && errors.password === ""){
-      axios.post('', values)
+      axios.post('http://localhost:3000/aunalertsystem/register', values)
       .then(res => {
         toast.success("Account Has Been Created Successfully", {
           position: "top-right",
           autoClose: 5000
         })
-      }).catch(err =>{})
+      }).catch(err =>{
+        console.log(err)
+      })
     }
   }
   return (
@@ -67,7 +69,7 @@ const Register = () => {
             errors.password && <span className='error'>{errors.password}</span>
           }
         </div>
-        <button className='form-btn'>Register</button>
+        <button className='form-btn' onClick={handleSubmit}>Register</button>
         <p>Already have an account? <Link to='/login'>Login</Link></p>
       </form>
     </div>
