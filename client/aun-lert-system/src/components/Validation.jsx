@@ -16,8 +16,8 @@ export default function Validation(values) {
     
     if(values.email.trim() === ""){
         errors.email = "Email Should Not be empty"
-    } else if(!email_pattern.test(values.email)){
-        errors.email = "Invalid Email!!!"
+    // } else if(!email_pattern.test(values.email)){
+    //     errors.email = "Invalid Email!!!"
     } else {
         errors.email = ""
     }
@@ -25,8 +25,8 @@ export default function Validation(values) {
 
     if(values.password === ""){
         errors.password = "Password Should Not be empty"
-    } else if(!password_pattern.test(values.password)){
-        errors.password = "Password Should be 1 small letter, 1 capital letter, a number to {8}}"
+    // } else if(!password_pattern.test(values.password)){
+    //     errors.password = "Password Should be 1 small letter, 1 capital letter, a number to {8}}"
     } else {
         errors.password = ""
     }
