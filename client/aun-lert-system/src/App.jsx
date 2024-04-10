@@ -3,6 +3,7 @@ import Home from './pages/Home'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Register from './pages/Register'
 import {ToastContainer} from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css"
 
 const router = createBrowserRouter([
   {

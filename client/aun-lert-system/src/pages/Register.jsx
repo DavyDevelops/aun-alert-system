@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Validation from '../components/Validation'
 import axios from 'axios'
 import {toast} from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css"
 
 //state manage ment implementation
 const Register = () => {
@@ -33,6 +34,7 @@ const Register = () => {
         })
       }).catch(err =>{
         console.log(err)
+        // if(err.response){}
       })
     }
   }
