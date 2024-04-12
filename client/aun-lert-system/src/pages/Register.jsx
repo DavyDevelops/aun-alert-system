@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import '../assets/css/form.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Validation from '../components/Validation'
 import axios from 'axios'
 import {toast} from 'react-toastify'
-import "react-toastify/dist/ReactToastify.css"
+import "react-toastify/dist/ReactToastify.css" 
 
 //state manage ment implementation
 const Register = () => {
@@ -16,6 +16,7 @@ const Register = () => {
 
   const [errors, setErrors] = useState({})
   const [serverErrors, setServerErrors] = useState([])
+  const navigate = useNavigate()
  
   const handleInput = (event) => {
     setValues({...values, [event.target.name]: event.target.value})
@@ -25,13 +26,14 @@ const Register = () => {
     //prevent default submission
     const errs = Validation(values)
     setErrors(errs)
-    if(errors.name === "" && errors.email === "" && errors.password === ""){
+    if(errs.name === "" && errs.email === "" && errs.password === ""){
       axios.post('http://localhost:3000/aunalertsystem/register', values)
       .then(res => {
         toast.success("Account Has Been Created Successfully", {
           position: "top-right",
           autoClose: 5000
         })
+        navigate('/login')
       }).catch(err =>{
         console.log(err)
         if(err.response.data.errors){
