@@ -2,8 +2,10 @@ import express from 'express'
 import { UserModel } from '../models/user.js'
 import { validationResult } from 'express-validator'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
 
-
+dotenv.config({path: "../config/.env"})
 
 
 const Register = async (req, res) => {
@@ -30,9 +32,42 @@ const Register = async (req, res) => {
     }
 
     return res.status(200).json("ok");
+};
+
+const Login = async (req, res) => {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()) {
+        return res.status(400).json({errors: errors.array()})
+    }
+    const {email, password} = req.body;
+    try {
+        const userExist = await UserModel.findOne({email})
+        if(!userExist) {
+            return res.status(400).json ({
+               errors: [{msg: "User Is Not Registered"}],
+            });
+        }
+        const isPasswordOk = await bcrypt.compare(password, userExist.password)
+        if(!isPasswordOk){
+            return res.status(400).json ({
+                errors: [{msg: "Wrong Password"}],
+             });
+        }
+        const token = jwt.sign({_id: userExist}, process.env.JWT_SECRET_KEY, {expiresIn: "3d"})
+        //todo store token in refresh token or cookies
+
+       const user ={...userExist._doc, passwword: undefined};
+        return res.status(201).json({success: true, user, token})
+    } catch(err) {
+        console.log(err)
+        return res.status(500).json({error: err.message})
+    }
+
+    return res.status(200).json("ok");
 }
 
 
 
-export { Register }
+
+export { Register, Login };
 

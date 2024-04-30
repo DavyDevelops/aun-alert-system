@@ -4,14 +4,15 @@ export default function Validation(values) {
     const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const password_pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
+    if(values?.name){
     if(values.name === ""){
-        errors.name = "Name Should Not be empty"
+        errors.name = "Name Should Not be empty";
     } else if(values.name.length < 3 || values.name.length > 30){
-        errors.name = "Name must be between 3-30"
+        errors.name = "Name must be between 3-30";
     } else {
-        errors.name = ""
+        errors.name = "";
     }
-    
+}
     
     
     if(values.email.trim() === ""){
